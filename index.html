@@ -1,1 +1,330 @@
+html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>UOB Hub — نقاطي</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <main class="container">
+
+    <section class="hero">
+      <div class="logo">UOB</div>
+
+      <h1>نقاطي</h1>
+
+      <p>
+        اكسب النقاط واستفد منها داخل تطبيق
+        <strong>UOB Hub</strong>
+      </p>
+    </section>
+
+    <section class="card" id="loginCard">
+
+      <h2>تسجيل الدخول</h2>
+
+      <p class="description">
+        سجّل الدخول باستخدام نفس حسابك في تطبيق UOB Hub.
+      </p>
+
+      <form id="loginForm">
+
+        <label for="email">البريد الإلكتروني</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="example@email.com"
+          required
+        >
+
+        <label for="password">كلمة المرور</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="كلمة المرور"
+          required
+        >
+
+        <button type="submit" id="loginButton">
+          تسجيل الدخول
+        </button>
+
+      </form>
+
+      <p id="message" class="message"></p>
+
+    </section>
+
+    <section class="card user-card hidden" id="userCard">
+
+      <div class="user-header">
+
+        <div>
+          <span class="small-text">مرحباً بك</span>
+          <h2 id="userEmail">...</h2>
+        </div>
+
+        <button id="logoutButton" class="logout">
+          تسجيل الخروج
+        </button>
+
+      </div>
+
+      <div class="points-box">
+
+        <span>رصيد نقاطك</span>
+
+        <strong id="pointsBalance">
+          0
+        </strong>
+
+        <span>نقطة</span>
+
+      </div>
+
+      <div class="info-box">
+
+        <h3>🎁 اكسب نقاطاً</h3>
+
+        <p>
+          قريباً ستتمكن من كسب النقاط من خلال المكافآت
+          والاستفادة منها داخل تطبيق UOB Hub.
+        </p>
+
+      </div>
+
+    </section>
+
+    <footer>
+      UOB Hub © 2026
+    </footer>
+
+  </main>
+
+  <script type="module">
+
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut
+    }
+      from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+    import {
+      getFirestore,
+      doc,
+      getDoc
+    }
+      from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+    // ==============================
+    // Firebase Configuration
+    // ==============================
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBcoS55XKf3lLRTXxevnpfrDZHZx5VB5vM",
+      authDomain: "uob-hub-app.firebaseapp.com",
+      projectId: "uob-hub-app",
+      storageBucket: "uob-hub-app.firebasestorage.app",
+      messagingSenderId: "159389513597",
+      appId: "1:159389513597:web:4f974f44ed5f1c0399fe14",
+      measurementId: "G-3RGCRG5CD5"
+    };
+
+
+    // ==============================
+    // Initialize Firebase
+    // ==============================
+
+    const app = initializeApp(firebaseConfig);
+
+    const auth = getAuth(app);
+
+    const db = getFirestore(app);
+
+
+    // ==============================
+    // Elements
+    // ==============================
+
+    const loginForm =
+      document.getElementById("loginForm");
+
+    const emailInput =
+      document.getElementById("email");
+
+    const passwordInput =
+      document.getElementById("password");
+
+    const loginButton =
+      document.getElementById("loginButton");
+
+    const logoutButton =
+      document.getElementById("logoutButton");
+
+    const message =
+      document.getElementById("message");
+
+    const loginCard =
+      document.getElementById("loginCard");
+
+    const userCard =
+      document.getElementById("userCard");
+
+    const userEmail =
+      document.getElementById("userEmail");
+
+    const pointsBalance =
+      document.getElementById("pointsBalance");
+
+
+    // ==============================
+    // Login
+    // ==============================
+
+    loginForm.addEventListener("submit", async (event) => {
+
+      event.preventDefault();
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      loginButton.disabled = true;
+      loginButton.textContent = "جاري تسجيل الدخول...";
+
+      message.textContent = "";
+
+      try {
+
+        await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+      } catch (error) {
+
+        console.error(error);
+
+        if (error.code === "auth/invalid-credential") {
+
+          message.textContent =
+            "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+
+        } else if (error.code === "auth/too-many-requests") {
+
+          message.textContent =
+            "تم إجراء محاولات كثيرة. حاول لاحقاً.";
+
+        } else {
+
+          message.textContent =
+            "حدث خطأ أثناء تسجيل الدخول.";
+
+        }
+
+      } finally {
+
+        loginButton.disabled = false;
+        loginButton.textContent = "تسجيل الدخول";
+
+      }
+
+    });
+
+
+    // ==============================
+    // Authentication State
+    // ==============================
+
+    onAuthStateChanged(auth, async (user) => {
+
+      if (user) {
+
+        loginCard.classList.add("hidden");
+
+        userCard.classList.remove("hidden");
+
+        userEmail.textContent =
+          user.email || "المستخدم";
+
+
+        // قراءة حساب النقاط
+        try {
+
+          const accountRef =
+            doc(db, "points_accounts", user.uid);
+
+          const accountSnapshot =
+            await getDoc(accountRef);
+
+          if (accountSnapshot.exists()) {
+
+            const data =
+              accountSnapshot.data();
+
+            pointsBalance.textContent =
+              Number(data.balance || 0);
+
+          } else {
+
+            pointsBalance.textContent = "0";
+
+          }
+
+        } catch (error) {
+
+          console.error(
+            "Points read error:",
+            error
+          );
+
+          pointsBalance.textContent = "0";
+
+        }
+
+      } else {
+
+        loginCard.classList.remove("hidden");
+
+        userCard.classList.add("hidden");
+
+      }
+
+    });
+
+
+    // ==============================
+    // Logout
+    // ==============================
+
+    logoutButton.addEventListener("click", async () => {
+
+      try {
+
+        await signOut(auth);
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
 
