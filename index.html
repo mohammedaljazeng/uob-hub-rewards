@@ -13,7 +13,9 @@
 
   <main class="container">
 
+    <!-- Header -->
     <section class="hero">
+
       <div class="logo">UOB</div>
 
       <h1>نقاطي</h1>
@@ -22,8 +24,11 @@
         اكسب النقاط واستفد منها داخل تطبيق
         <strong>UOB Hub</strong>
       </p>
+
     </section>
 
+
+    <!-- Login -->
     <section class="card" id="loginCard">
 
       <h2>تسجيل الدخول</h2>
@@ -34,7 +39,10 @@
 
       <form id="loginForm">
 
-        <label for="email">البريد الإلكتروني</label>
+        <label for="email">
+          البريد الإلكتروني
+        </label>
+
         <input
           type="email"
           id="email"
@@ -42,7 +50,10 @@
           required
         >
 
-        <label for="password">كلمة المرور</label>
+        <label for="password">
+          كلمة المرور
+        </label>
+
         <input
           type="password"
           id="password"
@@ -60,45 +71,191 @@
 
     </section>
 
-    <section class="card user-card hidden" id="userCard">
 
-      <div class="user-header">
+    <!-- User Dashboard -->
+    <section class="hidden" id="userCard">
 
-        <div>
-          <span class="small-text">مرحباً بك</span>
-          <h2 id="userEmail">...</h2>
+      <!-- User -->
+      <div class="card">
+
+        <div class="user-header">
+
+          <div>
+
+            <span class="small-text">
+              مرحباً بك
+            </span>
+
+            <h2 id="userEmail">
+              ...
+            </h2>
+
+          </div>
+
+          <button
+            id="logoutButton"
+            class="logout"
+          >
+            تسجيل الخروج
+          </button>
+
         </div>
-
-        <button id="logoutButton" class="logout">
-          تسجيل الخروج
-        </button>
 
       </div>
 
-      <div class="points-box">
 
-        <span>رصيد نقاطك</span>
+      <!-- Balance -->
+      <div class="balance-card">
+
+        <span class="balance-title">
+          رصيد نقاطك
+        </span>
 
         <strong id="pointsBalance">
           0
         </strong>
 
-        <span>نقطة</span>
+        <span class="balance-unit">
+          نقطة
+        </span>
 
       </div>
 
-      <div class="info-box">
 
-        <h3>🎁 اكسب نقاطاً</h3>
+      <!-- Reward -->
+      <div class="card reward-card">
+
+        <div class="reward-icon">
+          🎁
+        </div>
+
+        <h2>
+          اكسب نقاطاً
+        </h2>
 
         <p>
-          قريباً ستتمكن من كسب النقاط من خلال المكافآت
-          والاستفادة منها داخل تطبيق UOB Hub.
+          شاهد إعلاناً مكافئاً واحصل على نقاط
+          تستخدمها داخل تطبيق UOB Hub.
+        </p>
+
+
+        <div class="daily-progress">
+
+          <div class="progress-header">
+
+            <span>
+              المكافآت اليومية
+            </span>
+
+            <strong id="dailyText">
+              0 / 5
+            </strong>
+
+          </div>
+
+          <div class="progress-bar">
+
+            <div
+              id="progressFill"
+              class="progress-fill"
+              style="width: 0%"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <button
+          id="rewardButton"
+          class="reward-button"
+        >
+          🎬 مشاهدة إعلان
+        </button>
+
+
+        <p
+          id="rewardMessage"
+          class="reward-message"
+        ></p>
+
+      </div>
+
+
+      <!-- How it works -->
+      <div class="card">
+
+        <h2>
+          كيف تعمل النقاط؟
+        </h2>
+
+        <div class="steps">
+
+          <div class="step">
+
+            <span>1</span>
+
+            <div>
+              <strong>شاهد الإعلان</strong>
+              <p>
+                اختر مشاهدة إعلان مكافئ.
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="step">
+
+            <span>2</span>
+
+            <div>
+              <strong>احصل على النقاط</strong>
+              <p>
+                عند استحقاق المكافأة تُضاف النقاط
+                إلى حسابك.
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="step">
+
+            <span>3</span>
+
+            <div>
+              <strong>استخدمها داخل التطبيق</strong>
+              <p>
+                استخدم نقاطك لفتح المزايا داخل
+                UOB Hub.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Important -->
+      <div class="notice">
+
+        <strong>
+          ملاحظة
+        </strong>
+
+        <p>
+          النقاط مخصصة للاستخدام داخل منصة UOB Hub
+          ولا يمكن تحويلها إلى أموال أو بيعها أو
+          تحويلها إلى مستخدم آخر.
         </p>
 
       </div>
 
     </section>
+
 
     <footer>
       UOB Hub © 2026
@@ -106,56 +263,79 @@
 
   </main>
 
+
+  <!-- Firebase -->
   <script type="module">
 
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import {
+      initializeApp
+    } from
+      "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
     import {
       getAuth,
       signInWithEmailAndPassword,
       onAuthStateChanged,
       signOut
-    }
-      from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+    } from
+      "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
     import {
       getFirestore,
       doc,
       getDoc
-    }
-      from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+    } from
+      "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-    // ==============================
-    // Firebase Configuration
-    // ==============================
+    // ==========================================
+    // Firebase
+    // ==========================================
 
     const firebaseConfig = {
-      apiKey: "AIzaSyBcoS55XKf3lLRTXxevnpfrDZHZx5VB5vM",
-      authDomain: "uob-hub-app.firebaseapp.com",
-      projectId: "uob-hub-app",
-      storageBucket: "uob-hub-app.firebasestorage.app",
-      messagingSenderId: "159389513597",
-      appId: "1:159389513597:web:4f974f44ed5f1c0399fe14",
-      measurementId: "G-3RGCRG5CD5"
+
+      apiKey:
+        "AIzaSyBcoS55XKf3lLRTXxevnpfrDZHZx5VB5vM",
+
+      authDomain:
+        "uob-hub-app.firebaseapp.com",
+
+      projectId:
+        "uob-hub-app",
+
+      storageBucket:
+        "uob-hub-app.firebasestorage.app",
+
+      messagingSenderId:
+        "159389513597",
+
+      appId:
+        "1:159389513597:web:4f974f44ed5f1c0399fe14",
+
+      measurementId:
+        "G-3RGCRG5CD5"
     };
 
 
-    // ==============================
-    // Initialize Firebase
-    // ==============================
+    const app =
+      initializeApp(firebaseConfig);
 
-    const app = initializeApp(firebaseConfig);
+    const auth =
+      getAuth(app);
 
-    const auth = getAuth(app);
+    const db =
+      getFirestore(app);
 
-    const db = getFirestore(app);
 
-
-    // ==============================
+    // ==========================================
     // Elements
-    // ==============================
+    // ==========================================
+
+    const loginCard =
+      document.getElementById("loginCard");
+
+    const userCard =
+      document.getElementById("userCard");
 
     const loginForm =
       document.getElementById("loginForm");
@@ -175,155 +355,296 @@
     const message =
       document.getElementById("message");
 
-    const loginCard =
-      document.getElementById("loginCard");
-
-    const userCard =
-      document.getElementById("userCard");
-
     const userEmail =
       document.getElementById("userEmail");
 
     const pointsBalance =
       document.getElementById("pointsBalance");
 
+    const rewardButton =
+      document.getElementById("rewardButton");
 
-    // ==============================
+    const rewardMessage =
+      document.getElementById("rewardMessage");
+
+    const dailyText =
+      document.getElementById("dailyText");
+
+    const progressFill =
+      document.getElementById("progressFill");
+
+
+    // ==========================================
+    // Daily limit
+    // ==========================================
+
+    const MAX_DAILY_REWARDS = 5;
+
+
+    // ==========================================
     // Login
-    // ==============================
+    // ==========================================
 
-    loginForm.addEventListener("submit", async (event) => {
+    loginForm.addEventListener(
+      "submit",
+      async (event) => {
 
-      event.preventDefault();
+        event.preventDefault();
 
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
+        const email =
+          emailInput.value.trim();
 
-      loginButton.disabled = true;
-      loginButton.textContent = "جاري تسجيل الدخول...";
-
-      message.textContent = "";
-
-      try {
-
-        await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-
-      } catch (error) {
-
-        console.error(error);
-
-        if (error.code === "auth/invalid-credential") {
-
-          message.textContent =
-            "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
-
-        } else if (error.code === "auth/too-many-requests") {
-
-          message.textContent =
-            "تم إجراء محاولات كثيرة. حاول لاحقاً.";
-
-        } else {
-
-          message.textContent =
-            "حدث خطأ أثناء تسجيل الدخول.";
-
-        }
-
-      } finally {
-
-        loginButton.disabled = false;
-        loginButton.textContent = "تسجيل الدخول";
-
-      }
-
-    });
+        const password =
+          passwordInput.value;
 
 
-    // ==============================
-    // Authentication State
-    // ==============================
+        loginButton.disabled = true;
 
-    onAuthStateChanged(auth, async (user) => {
+        loginButton.textContent =
+          "جاري تسجيل الدخول...";
 
-      if (user) {
-
-        loginCard.classList.add("hidden");
-
-        userCard.classList.remove("hidden");
-
-        userEmail.textContent =
-          user.email || "المستخدم";
+        message.textContent = "";
 
 
-        // قراءة حساب النقاط
         try {
 
-          const accountRef =
-            doc(db, "points_accounts", user.uid);
-
-          const accountSnapshot =
-            await getDoc(accountRef);
-
-          if (accountSnapshot.exists()) {
-
-            const data =
-              accountSnapshot.data();
-
-            pointsBalance.textContent =
-              Number(data.balance || 0);
-
-          } else {
-
-            pointsBalance.textContent = "0";
-
-          }
+          await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
 
         } catch (error) {
 
-          console.error(
-            "Points read error:",
-            error
-          );
+          console.error(error);
 
-          pointsBalance.textContent = "0";
+          if (
+            error.code ===
+            "auth/invalid-credential"
+          ) {
 
+            message.textContent =
+              "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+
+          } else if (
+            error.code ===
+            "auth/too-many-requests"
+          ) {
+
+            message.textContent =
+              "تم إجراء محاولات كثيرة. حاول لاحقاً.";
+
+          } else {
+
+            message.textContent =
+              "حدث خطأ أثناء تسجيل الدخول.";
+
+          }
+
+        } finally {
+
+          loginButton.disabled = false;
+
+          loginButton.textContent =
+            "تسجيل الدخول";
         }
 
-      } else {
-
-        loginCard.classList.remove("hidden");
-
-        userCard.classList.add("hidden");
-
       }
+    );
 
-    });
 
+    // ==========================================
+    // Load Points
+    // ==========================================
 
-    // ==============================
-    // Logout
-    // ==============================
-
-    logoutButton.addEventListener("click", async () => {
+    async function loadPoints(user) {
 
       try {
 
-        await signOut(auth);
+        const accountRef =
+          doc(
+            db,
+            "points_accounts",
+            user.uid
+          );
+
+
+        const snapshot =
+          await getDoc(accountRef);
+
+
+        if (!snapshot.exists()) {
+
+          pointsBalance.textContent = "0";
+
+          dailyText.textContent =
+            `0 / ${MAX_DAILY_REWARDS}`;
+
+          progressFill.style.width = "0%";
+
+          return;
+        }
+
+
+        const data =
+          snapshot.data();
+
+
+        const balance =
+          Number(data.balance || 0);
+
+        pointsBalance.textContent =
+          balance;
+
+
+        // --------------------------
+        // Daily ads
+        // --------------------------
+
+        const today =
+          new Date()
+            .toISOString()
+            .slice(0, 10);
+
+
+        let dailyCount = 0;
+
+
+        if (data.adsDate === today) {
+
+          dailyCount =
+            Number(data.adsToday || 0);
+
+        }
+
+
+        dailyCount =
+          Math.min(
+            dailyCount,
+            MAX_DAILY_REWARDS
+          );
+
+
+        dailyText.textContent =
+          `${dailyCount} / ${MAX_DAILY_REWARDS}`;
+
+
+        const percentage =
+          (
+            dailyCount /
+            MAX_DAILY_REWARDS
+          ) * 100;
+
+
+        progressFill.style.width =
+          `${percentage}%`;
+
+
+        if (
+          dailyCount >=
+          MAX_DAILY_REWARDS
+        ) {
+
+          rewardButton.disabled = true;
+
+          rewardButton.textContent =
+            "اكتملت مكافآت اليوم";
+
+        }
 
       } catch (error) {
 
-        console.error(error);
+        console.error(
+          "Points error:",
+          error
+        );
+
+        rewardMessage.textContent =
+          "تعذر تحميل بيانات النقاط.";
 
       }
 
-    });
+    }
+
+
+    // ==========================================
+    // Authentication State
+    // ==========================================
+
+    onAuthStateChanged(
+      auth,
+      async (user) => {
+
+        if (user) {
+
+          loginCard.classList.add(
+            "hidden"
+          );
+
+          userCard.classList.remove(
+            "hidden"
+          );
+
+
+          userEmail.textContent =
+            user.email || "المستخدم";
+
+
+          await loadPoints(user);
+
+        } else {
+
+          loginCard.classList.remove(
+            "hidden"
+          );
+
+          userCard.classList.add(
+            "hidden"
+          );
+
+        }
+
+      }
+    );
+
+
+    // ==========================================
+    // Logout
+    // ==========================================
+
+    logoutButton.addEventListener(
+      "click",
+      async () => {
+
+        try {
+
+          await signOut(auth);
+
+        } catch (error) {
+
+          console.error(error);
+
+        }
+
+      }
+    );
+
+
+    // ==========================================
+    // Reward Button
+    // ==========================================
+
+    rewardButton.addEventListener(
+      "click",
+      () => {
+
+        rewardMessage.textContent =
+          "نظام الإعلانات المكافئة سيتم ربطه في الخطوة التالية.";
+
+      }
+    );
 
   </script>
 
 </body>
 </html>
-
